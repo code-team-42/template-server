@@ -1,0 +1,38 @@
+{
+    "name": "template-server",
+    "version": "1.0.0",
+    "description": "Mongoose server template for Code Team 42",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/code-team-42/template-server.git"
+    },
+    "keywords": [
+        "mongoose",
+        "mongo",
+        "server",
+        "template",
+        "express",
+        "node"
+    ],
+    "author": "Code Team 42",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/code-team-42/template-server/issues"
+    },
+    "homepage": "https://github.com/code-team-42/template-server#readme",
+    "dependencies": {
+        "bcrypt": "^3.0.6",
+        "dotenv": "^8.0.0",
+        "express": "^4.17.1",
+        "express-session": "^1.16.2",
+        "mongoose": "^5.6.7",
+        "morgan": "^1.9.1",
+        "passport": "^0.4.0",
+        "passport-local": "^1.0.0"
+    }
+}
