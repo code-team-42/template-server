@@ -1,5 +1,5 @@
 module.exports = function(req, res, next) {
-    if (req.user.id === req.params.userId || req.user.role === 'admin') {
+    if (req.user.role === 'admin') {
         return next();
     }
     return res

@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const passport = require('./config/passport');
 const logger = require('morgan');
 const routes = require('./routes');
@@ -22,17 +22,15 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DBName', {
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Serve static assets
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
 
 //Passport
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: true,
-        saveUninitialized: true
-    })
-);
 app.use(passport.initialize());
-app.use(passport.session());
 
 //Logging
 app.use(logger('dev'));
@@ -44,5 +42,5 @@ app.use(routes);
 app.use(errorHandler);
 
 app.listen(PORT, function() {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+    console.log(`API Server now listening on PORT ${PORT}!`);
 });

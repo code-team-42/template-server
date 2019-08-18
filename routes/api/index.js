@@ -1,14 +1,22 @@
 const router = require('express').Router();
 const userRoutes = require('./user');
-const { signIn, signOut } = require('../../controllers/userController');
+const { signIn, signOut, auth } = require('../../controllers/userController');
 const passport = require('../../config/passport');
-const isAuthenticated = require('../../middleware/isAuthenticated');
 
-//API route '/api/signIn'
-router.route('/signIn').post(passport.authenticate('local'), signIn);
+//API route '/api/login'
+router
+    .route('/login')
+    .post(passport.authenticate('local', { session: false }), signIn);
 
-//API route '/api/signOut'
-router.route('/signOut').post(isAuthenticated, signOut);
+//API route '/api/logout'
+router
+    .route('/logout')
+    .post(passport.authenticate('jwt', { session: false }), signOut);
+
+//API route 'api/auth'
+router
+    .route('/auth')
+    .get(passport.authenticate('jwt', { session: false }), auth);
 
 router.use('/user', userRoutes);
 

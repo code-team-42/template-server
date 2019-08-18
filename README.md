@@ -27,7 +27,7 @@ to match the URI of your development database.
 Create a `.env` file with
 
 ```
-SESSION_SECRET='Your session secret'
+AUTH_SECRET='Your authentication secret'
 ```
 
 ### Built With
