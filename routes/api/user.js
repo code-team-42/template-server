@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {
-    createUser,
-    updatePassword
+  createUser,
+  updatePassword
 } = require('../../controllers/userController');
 const hasPermission = require('../../middleware/hasPermission');
 const passport = require('passport');

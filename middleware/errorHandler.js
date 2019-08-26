@@ -1,4 +1,4 @@
 module.exports = (err, req, res, next) => {
-    console.log(err);
-    res.status(500).json({ msg: 'Something broke' });
-}
+  console.log(err);
+  res.status(500).json({ msg: 'Something broke' });
+};

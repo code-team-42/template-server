@@ -1,28 +1,67 @@
-# template-server
+# Templat-test
 
-CT42 Server Template
+Test template for CodeTeam42/Zadruga
 
-## Getting Started
+## Table Of Contents
 
-### Installing packages
+- [Installation](#installation)
+- [Setup](#setup)
+  - [Database](#database)
+  - [Environment Variables](#environment-variables)
+  - [Seed Data](#seed-data)
+  - [Seed Script](#seed-script)
+- [Running the template](#running-the-template)
+- [Built With](#built-with)
+- [Authors](#authors)
+- [License](#license)
 
-Navigate to the working directory and install all dependencies using:
+## Installation
+
+---
+
+In the terminal navigate to the working directory and install all dependencies:
 
 ```
-$ npm i
+$ npm install
 ```
 
-### Configuring to your project
+## Setup
 
-In the server.js change the `'mongodb://localhost/DBName'` in
+---
+
+### Database
+
+Create the databases if they do not already exist, then in the config/config.js change the values to match your databases:
 
 ```
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DBName', {
-    useNewUrlParser: true
-});
+development: {
+    username: <username>,
+    password: <password>,
+    database: <dev_dbname>,
+    host: '127.0.0.1',
+    dialect: 'mysql'
+},
+local: {
+  username: <username>,
+  password: <password>,
+  database: 'local',
+  host: '127.0.0.1',
+  dialect: 'mysql'
+},
+test: {
+  username: <username>,
+  password: <password>,
+  database: <test_dbname>,
+  host: '127.0.0.1',
+  dialect: 'mysql'
+},
+production: {
+  use_env_variable: 'JAWSDB_URL',
+  dialect: 'mysql'
+}
 ```
 
-to match the URI of your development database.
+### Environment Variables
 
 Create a `.env` file with
 
@@ -30,18 +69,62 @@ Create a `.env` file with
 AUTH_SECRET='Your authentication secret'
 ```
 
-### Built With
+### Seed Data
 
--   [Express](https://expressjs.com/) - Web framework for Node.js
+To add data to be seeded into your database edit the scripts/seedData.js file. Create an export using the name of the model holding the data to be seeded into the database:
 
--   [Mongoose](https://mongoosejs.com/) - A MongoDB ODM
+```
+module.exports.User = [
+  {
+    email: 'user@test.com',
+    password: 'user',
+    role: 'user'
+  },
+  {
+    email: 'admin@test.com',
+    password: 'admin',
+    role: 'admin'
+  }
+];
+```
 
--   [Passport](http://www.passportjs.org/) - Authentication middleware for Node.js
+### Seed Script
 
--   [Bcrypt](https://www.npmjs.com/package/bcrypt) - A package for hashing passwords
+In the working directory run the seed script:
 
--   [Morgan](https://www.npmjs.com/package/morgan) - HTTP request logger middleware for Node.js
+```
+$ npm run seed
+```
 
-### License
+## Running the template
 
-This project is licensed under the MIT License - see the LICENSE file for details
+In the working directory run the start script:
+
+```
+$ npm start
+```
+
+## Built With
+
+- [Express](https://expressjs.com/) - Web framework for Node.js
+
+- [Sequelize](/https://sequelize.org) - A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
+
+- [React](https://react.org) - A JavaScript library for building user interfaces
+
+- [Passport](http://www.passportjs.org/) - Authentication middleware for Node.js
+
+- [JSONWebToken](https://www.npmjs.com/package/jsonwebtoken) - A implementation of JSON Web Tokens for Node.js
+
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) - A package for hashing passwords
+
+- [Morgan](https://www.npmjs.com/package/morgan) - HTTP request logger middleware for Node.js
+
+## Authors
+
+- Ben Houston - _Initial Back-End Work_
+- Will Houston - _Initial Front-End Work_
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./license) for details

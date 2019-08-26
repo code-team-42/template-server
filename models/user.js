@@ -1,48 +1,46 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-
 const saltRounds = 10;
 
-const userSchema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [
-            /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})+$/,
-            'Please fill a valid email address'
-        ]
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
+    {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: 'user'
+      }
     },
-    password: {
-        type: String,
-        required: true
-    },
-    role: {
-        type: String,
-        enum: ['admin', 'user'],
-        default: 'user',
-        required: true
+    {
+      underscored: true
     }
-});
+  );
 
-userSchema.methods.validPassword = function(password) {
+  User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
-};
+  };
 
-userSchema.pre('save', function(next) {
-    let user = this;
-
-    if (!user.isModified('password')) return next();
+  User.beforeSave((user, options) => {
+    if (!user.changed('password')) return;
 
     user.password = bcrypt.hashSync(
-        user.password,
-        bcrypt.genSaltSync(saltRounds),
-        null
+      user.password,
+      bcrypt.genSaltSync(saltRounds),
+      null
     );
-    return next();
-});
 
-const User = mongoose.model('User', userSchema);
+    return user;
+  });
 
-module.exports = User;
+  User.associate = function(models) {};
+
+  return User;
+};
