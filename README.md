@@ -4,16 +4,18 @@ Test template for CodeTeam42/Zadruga
 
 ## Table Of Contents
 
-- [Installation](#installation)
-- [Setup](#setup)
-  - [Database](#database)
-  - [Environment Variables](#environment-variables)
-  - [Seed Data](#seed-data)
-  - [Seed Script](#seed-script)
-- [Running the template](#running-the-template)
-- [Built With](#built-with)
-- [Authors](#authors)
-- [License](#license)
+- [Templat-test](#templat-test)
+  - [Table Of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Setup](#setup)
+    - [Database](#database)
+    - [Environment Variables](#environment-variables)
+    - [Seed Data](#seed-data)
+    - [Seed Script](#seed-script)
+  - [Running the template](#running-the-template)
+  - [Built With](#built-with)
+  - [Authors](#authors)
+  - [License](#license)
 
 ## Installation
 

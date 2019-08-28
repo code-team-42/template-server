@@ -9,4 +9,4 @@ module.exports.User = [
     password: 'admin',
     role: 'admin'
   }
-];
+]

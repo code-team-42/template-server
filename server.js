@@ -1,42 +1,39 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const app = express();
-const cookieParser = require('cookie-parser');
-const passport = require('./config/passport');
-const logger = require('morgan');
-const routes = require('./routes');
-const errorHandler = require('./middleware/errorHandler');
-const PORT = process.env.PORT || 3001;
-const db = require('./models');
+const express = require('express')
 
-//Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+const app = express()
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
+const passport = require('./auth/passport')
+const routes = require('./routes')
+const errorHandler = require('./middleware/errorHandler')
 
-// Serve static assets
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
+const PORT = process.env.PORT || 3001
+const db = require('./models')
 
-//Passport
-app.use(passport.initialize());
+// Middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
-//Logging
-app.use(logger('dev'));
+// Passport
+app.use(passport.initialize())
 
-//Routes
-app.use(routes);
+// Logging
+app.use(logger('dev'))
 
-//Error handler
-app.use(errorHandler);
+// Routes
+app.use(routes)
+
+// Error handler
+app.use(errorHandler)
 
 db.sequelize
   .sync({ force: false })
   .then(() => {
-    app.listen(PORT, function() {
-      console.log(`API Server now listening on PORT ${PORT}!`);
-    });
+    app.listen(PORT, () => {
+      console.log(`API Server now listening on PORT ${PORT}!`)
+    })
   })
-  .catch(err => console.log(err));
+  .catch(err => console.log(err))
