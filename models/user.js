@@ -1,5 +1,6 @@
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const bcrypt = require('bcrypt')
+
+const saltRounds = 10
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -22,25 +23,19 @@ module.exports = (sequelize, DataTypes) => {
     {
       underscored: true
     }
-  );
+  )
 
   User.prototype.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-  };
+    return bcrypt.compareSync(password, this.password)
+  }
 
-  User.beforeSave((user, options) => {
-    if (!user.changed('password')) return;
+  User.beforeSave(user => {
+    if (!user.changed('password')) return
+    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(saltRounds), null)
+  })
 
-    user.password = bcrypt.hashSync(
-      user.password,
-      bcrypt.genSaltSync(saltRounds),
-      null
-    );
+  // eslint-disable-next-line no-unused-vars
+  User.associate = function(models) {}
 
-    return user;
-  });
-
-  User.associate = function(models) {};
-
-  return User;
-};
+  return User
+}
