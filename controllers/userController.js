@@ -12,7 +12,7 @@ exports.createUser = (req, res, next) => {
 }
 
 exports.updatePassword = (req, res, next) => {
-  db.User.Update(
+  db.User.update(
     { password: req.body.password },
     {
       where: {
@@ -20,8 +20,9 @@ exports.updatePassword = (req, res, next) => {
       }
     }
   )
-    .then(user => {
-      res.json({ msg: `${user.email} password updated` })
+    .then(updated => {
+      if (!updated) return res.json({ msg: 'Password not updated' })
+      return res.json({ msg: 'Password updated' })
     })
     .catch(next)
 }

@@ -1,20 +1,20 @@
 // Add any other authorization methods other than local/jwt
 const router = require('express').Router()
-const passport = require('passport')
-const { auth, login } = require('../../../controllers/authController')
+const { auth, local } = require('../../../controllers/authController')
 
 // API route '/api/v1/auth/logout'
 router.route('/logout').get(auth, (req, res) => {
   // use passport's built in logout method
-  req.logout()
+  // req.logout()
+  res.clearCookie('jwt', { httpOnly: true })
   res.redirect('/')
 })
 
 // API route '/api/v1/auth/login'
-router.route('/login').post(login)
+router.route('/login').post(local)
 
 // API route '/api/v1/auth'
-router.route('/').get(passport.authenticate('jwt', { session: false }), auth, (req, res) => {
+router.route('/').get(auth, (req, res) => {
   res.json(req.user)
 })
 

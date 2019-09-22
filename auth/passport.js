@@ -44,10 +44,11 @@ const opts = {
   },
   secretOrKey: process.env.AUTH_SECRET
 }
+
 passport.use(
   'jwt',
   new JwtStrategy(opts, (token, done) => {
-    console.log(token)
+    // console.log(token)
     return done(null, token)
   })
 )
