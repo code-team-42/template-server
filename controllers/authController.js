@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 //   return res.status(401).send({ msg: 'Not authorized' })
 // }
 
-// Authenticates user using passport local strategy and assigns JWT token to cookie
+// Authenticates user using passport local strategy and assigns JWT to cookie
 exports.local = (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err || !user) {
@@ -21,10 +21,11 @@ exports.local = (req, res, next) => {
   })(req, res, next)
 }
 
+// Authenticates user using passport JWT and adds the decoded token to the res.locals.payload for use in middleware
 exports.auth = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
     if (err || !user) {
-      return res.status(401).json({ msg: 'Failed to sign in' })
+      return res.status(401).json({ msg: 'Failed ' })
     }
     res.locals.payload = user
     return next()
