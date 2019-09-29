@@ -15,7 +15,7 @@ router.route('/login').post(local)
 
 // API route '/api/v1/auth'
 router.route('/').get(auth, (req, res) => {
-  res.json(req.user)
+  res.json(res.locals.user)
 })
 
 /* Routes for after Google authentication is enabled

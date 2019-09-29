@@ -15,7 +15,8 @@ exports.updatePassword = (req, res, next) => {
     {
       where: {
         id: req.params.userId
-      }
+      },
+      individualHooks: true
     }
   )
     .then(updated => {
