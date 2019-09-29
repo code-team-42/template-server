@@ -14,7 +14,6 @@ passport.use(
     },
     (email, password, done) => {
       email = email.toLowerCase()
-      console.log(email, password)
       db.User.findOne({ where: { email } })
         .then(user => {
           if (!user) {
@@ -44,10 +43,10 @@ const opts = {
   },
   secretOrKey: process.env.AUTH_SECRET
 }
+
 passport.use(
   'jwt',
   new JwtStrategy(opts, (token, done) => {
-    console.log(token)
     return done(null, token)
   })
 )
